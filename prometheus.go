@@ -413,7 +413,6 @@ func mustRegisterMetrics(deniedMetrics MetricsSet) {
 }
 
 func fetchWorkerAnalytics(account cloudflare.Account, wg *sync.WaitGroup) {
-	wg.Add(1)
 	defer wg.Done()
 
 	r, err := fetchWorkerTotals(account.ID)
@@ -441,7 +440,6 @@ func fetchWorkerAnalytics(account cloudflare.Account, wg *sync.WaitGroup) {
 }
 
 func fetchLogpushAnalyticsForAccount(account cloudflare.Account, wg *sync.WaitGroup) {
-	wg.Add(1)
 	defer wg.Done()
 
 	if viper.GetBool("free_tier") {
@@ -465,7 +463,6 @@ func fetchLogpushAnalyticsForAccount(account cloudflare.Account, wg *sync.WaitGr
 }
 
 func fetchLogpushAnalyticsForZone(zones []cloudflare.Zone, wg *sync.WaitGroup) {
-	wg.Add(1)
 	defer wg.Done()
 
 	if viper.GetBool("free_tier") {
@@ -493,7 +490,6 @@ func fetchLogpushAnalyticsForZone(zones []cloudflare.Zone, wg *sync.WaitGroup) {
 }
 
 func fetchZoneColocationAnalytics(zones []cloudflare.Zone, wg *sync.WaitGroup) {
-	wg.Add(1)
 	defer wg.Done()
 
 	// Colocation metrics are not available in non-enterprise zones
@@ -522,7 +518,6 @@ func fetchZoneColocationAnalytics(zones []cloudflare.Zone, wg *sync.WaitGroup) {
 }
 
 func fetchZoneAnalytics(zones []cloudflare.Zone, wg *sync.WaitGroup) {
-	wg.Add(1)
 	defer wg.Done()
 
 	// None of the below referenced metrics are available in the free tier
@@ -673,7 +668,6 @@ func addHTTPAdaptiveGroups(z *zoneResp, name string, account string) {
 }
 
 func fetchLoadBalancerAnalytics(zones []cloudflare.Zone, wg *sync.WaitGroup) {
-	wg.Add(1)
 	defer wg.Done()
 
 	// None of the below referenced metrics are available in the free tier

@@ -109,7 +109,9 @@ func fetchMetrics() {
 	filteredZones := filterExcludedZones(filterZones(zones, getTargetZones()), getExcludedZones())
 
 	for _, a := range accounts {
+		wg.Add(1)
 		go fetchWorkerAnalytics(a, &wg)
+		wg.Add(1)
 		go fetchLogpushAnalyticsForAccount(a, &wg)
 	}
 
@@ -124,16 +126,20 @@ func fetchMetrics() {
 		targetZones := filteredZones[:sliceLength]
 		filteredZones = filteredZones[len(targetZones):]
 
+		wg.Add(1)
 		go fetchZoneAnalytics(targetZones, &wg)
+		wg.Add(1)
 		go fetchZoneColocationAnalytics(targetZones, &wg)
+		wg.Add(1)
 		go fetchLoadBalancerAnalytics(targetZones, &wg)
+		wg.Add(1)
 		go fetchLogpushAnalyticsForZone(targetZones, &wg)
 	}
 
 	wg.Wait()
 }
 
-func runExpoter() {
+func runExporter() {
 	// fmt.Println(" :", viper.GetString("cf_api_email"))
 	// fmt.Println(" :", viper.GetString("cf_api_key"))
 
@@ -197,7 +203,7 @@ func main() {
 		Use:   "viper-test",
 		Short: "testing viper",
 		Run: func(_ *cobra.Command, _ []string) {
-			runExpoter()
+			runExporter()
 		},
 	}
 

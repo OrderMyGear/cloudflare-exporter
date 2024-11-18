@@ -1,3 +1,5 @@
+This fork fixes the `panic: sync: WaitGroup is reused before previous Wait has returned` issue.
+
 # CloudFlare Prometheus exporter
 [<img src="ll-logo.png">](https://lablabs.io/)
 
